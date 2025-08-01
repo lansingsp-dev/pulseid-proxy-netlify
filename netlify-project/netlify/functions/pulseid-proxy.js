@@ -1,20 +1,17 @@
+// pulseid-proxy.js
 export async function handler(event, context) {
-  const BASE_URL = "https://rockbottom.pulseidconnect.com/api/api/";
   const API_KEY = "pulseRockBottomGolf";
   const COMPANY = "PersonalizeYourGear";
 
   const method = event.httpMethod;
-  const { endpoint, ...queryParams } = event.queryStringParameters || {};
+  const { url } = event.queryStringParameters || {};
 
-  if (!endpoint) {
+  if (!url) {
     return {
       statusCode: 400,
-      body: JSON.stringify({ error: "Missing 'endpoint' parameter" }),
+      body: JSON.stringify({ error: "Missing 'url' parameter" }),
     };
   }
-
-  const query = new URLSearchParams(queryParams).toString();
-  const url = `${BASE_URL}${endpoint}?${query}`;
 
   const options = {
     method,
